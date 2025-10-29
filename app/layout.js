@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Linktree clone by DatenDiva",
-  description: "A simple Linktree clone built with Next.js 13 and Tailwind CSS",
+  description: "A simple Linktree clone built with Next.js 13 and Tailwind CSS.",
 };
 
 export default function RootLayout({ children }) {
