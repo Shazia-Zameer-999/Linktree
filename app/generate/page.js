@@ -97,31 +97,31 @@ const GenerateForm = () => {
         <>
             <ToastContainer />
             <div className="bg-[#d5a334] min-h-screen grid min-[900px]:grid-cols-2 grid-cols-1 gap-5">
-                <div className="col1 pt-[15vh] flex flex-col items-center justify-center gap-8 text-[#3a3939] max-[400px]:mx-3">
+                <div className="col1 pt-[15vh] flex flex-col items-center justify-center gap-8 text-[#3a3939] max-[400px]:px-3">
                     <h1 className='text-4xl font-bold'>Create your LinkTree!</h1>
                     <div className='flex flex-col gap-5 '>
-                        <h2 className='font-semibold text-2xl max-[400px]:mx-3'>Step 1: Claim your Handle</h2>
+                        <h2 className='font-semibold text-2xl max-[400px]:px-3'>Step 1: Claim your Handle</h2>
                         <div>
-                            <input value={handle} onChange={e => { sethandle(e.target.value) }} className='bg-white py-3 pr-48 max-[400px]:mx-3  min-[490px]:pr-65 pl-2 rounded-lg focus:outline-amber-500' type="text" placeholder='Choose a handle' />
+                            <input value={handle} onChange={e => { sethandle(e.target.value) }} className='bg-white py-3 pr-35  min-[490px]:pr-65 pl-2 rounded-lg focus:outline-amber-500' type="text" placeholder='Choose a handle' />
                         </div>
-                        <h2 className='font-semibold text-2xl max-[400px]:mx-3'>Step 2: Add Links</h2>
+                        <h2 className='font-semibold text-2xl max-[400px]:px-3 '>Step 2: Add Links</h2>
                         {links && links.map((item, index) => {
-                            return <div key={index} className='flex  min-[490px]:gap-5 gap-2 max-[400px]:mx-3'>
-                                <input value={item.linktext} onChange={e => handleChange(index, item.link, e.target.value)} className='bg-white py-3 min-[490px]:px-4 px-1 rounded-lg focus:outline-amber-500' type="text" placeholder='Enter link text' />
+                            return <div key={index} className='flex  min-[490px]:gap-5 gap-2 '>
+                                <input value={item.linktext} onChange={e => handleChange(index, item.link, e.target.value)} className='bg-white py-3 min-[490px]:px-4 max-[400px]:w-40 pl-1 rounded-lg focus:outline-amber-500' type="text" placeholder='Enter link text' />
 
-                                <input value={item.link} onChange={e => handleChange(index, e.target.value, item.linktext)} className='bg-white py-3 min-[490px]:px-4 px-1 rounded-lg focus:outline-amber-500' type="text" placeholder='Enter link' />
+                                <input value={item.link} onChange={e => handleChange(index, e.target.value, item.linktext)} className='bg-white py-3 min-[490px]:px-4 max-[400px]:w-40 pl-1 rounded-lg focus:outline-amber-500' type="text" placeholder='Enter link' />
                             </div>
                         })}
 
-                        <button onClick={() => addLink()} className='max-[400px]:mx-3 font-bold text-white   bg-[#201f1f] rounded-xl py-2 cursor-pointer max-[490px]:w-95'>+ Add Link</button>
+                        <button onClick={() => addLink()} className='max-[400px]:px-3 font-bold text-white   bg-[#201f1f] rounded-xl py-2 cursor-pointer max-[490px]:w-83'>+ Add Link</button>
 
 
 
-                        <h2 className='font-semibold text-2xl max-[400px]:mx-3'>Step 3: Add picture and finalize</h2>
+                        <h2 className='font-semibold text-2xl'>Step 3: Add picture and finalize</h2>
                         <div className='flex flex-col gap-4' >
-                            <input value={pic} onChange={e => { setpic(e.target.value) }} className='bg-white py-3 max-[400px]:mx-3 pr-48  min-[490px]:pr-65 pl-2 rounded-lg focus:outline-amber-500' type="text" placeholder='Enter link to your Picture' />
+                            <input value={pic} onChange={e => { setpic(e.target.value) }} className='bg-white py-3 pr-40  min-[490px]:pr-65 pl-2 rounded-lg focus:outline-amber-500' type="text" placeholder='Enter link to your Picture' />
                         </div>
-                        <button disabled={pic === "" || handle === "" || links.every(l => l.linktext === "" || l.link === "")} onClick={() => { submitLinks(handle, links, pic) }} className='max-[400px]:mx-3 px-2 font-bold text-white   bg-[#201f1f] rounded-xl p-2 cursor-pointer disabled:bg-slate-500'>Create your Linktree</button>
+                        <button disabled={pic === "" || handle === "" || links.every(l => l.linktext === "" || l.link === "")} onClick={() => { submitLinks(handle, links, pic) }} className='px-2 font-bold text-white   bg-[#201f1f] rounded-xl p-2 cursor-pointer disabled:bg-slate-500'>Create your Linktree</button>
 
                     </div>
 
