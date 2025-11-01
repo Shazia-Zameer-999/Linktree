@@ -537,40 +537,34 @@ const FaqItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-  
-    <div className={`
-            mb-4 
-            rounded-xl 
-            shadow-lg 
-            bg-[#780016] 
-            text-white
-            transition-colors duration-200 ease-in-out
-        `}>
+    // This is a single item. The background is transparent
+    // because its parent (bg-gray-900) provides the color.
+    <div className="border-b border-white/20"> {/* Divider line */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex justify-between items-center text-left py-5 px-6 focus:outline-none"
       >
-        <h3 className="text-lg font-medium text-white">{question}</h3> 
+        <h3 className="text-lg font-medium text-slate-100">{question}</h3>
+
+        {/* We use the icon color and rotation from the screenshot */}
         <span className={`
-                    text-white 
+                    text-blue-400 
                     transition-transform duration-300 ease-in-out
-                    ${isOpen ? 'rotate-180' : 'rotate-0'}
+                    ${isOpen ? 'rotate-180' : 'rotate-0'} 
                 `}>
           <FaChevronDown size={20} />
         </span>
       </button>
-      <div className={`
-                transition-max-height duration-500 ease-in-out overflow-hidden
-                ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'} 
-            `}>
-        <div className="pb-5 px-6 text-white text-base"> 
+
+      {/* This animation is correct */}
+      <div className={`transition-max-height duration-500 ease-in-out overflow-hidden ${isOpen ? 'max-h-96' : 'max-h-0'}`}>
+        <div className="pb-5 px-6 text-slate-400">
           {answer}
         </div>
       </div>
     </div>
   );
 };
-
 
 const Home = () => {
   const faqs = [
@@ -921,23 +915,26 @@ const Home = () => {
             </div>
           </div>
         </section>
-        <div className="text-white container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-center flex-col items-center h-[40vh] gap-4 text-center">
-            <h1 className="font-bold text-4xl sm:text-5xl">Frequently Asked Questions</h1>
-            <p className="max-w-2xl text-base sm:text-lg text-slate-300">
-              Have a question? We're here to help. Find answers to common questions about our platform below.
-            </p>
-          </div>
+        <section className="section-9 bg-[#780016] text-[#e9c0e9] min-h-[100vh] py-20 relative w-full">
+          <div className='md:w-[80vw] w-[95vw] mx-auto justify-center items-center flex flex-col gap-10'>
+            <h2 className='md:text-6xl text-4xl font-extrabold text-center'>Questions? Answered</h2>
 
-          <div className="max-w-3xl mx-auto my-12">
-            
-            <div className=""> 
-              {faqs.map((faq, index) => (
-                <FaqItem key={index} question={faq.question} answer={faq.answer} />
-              ))}
+            <div className='flex flex-col md:gap-5 gap-3 justify-center items-center w-[100%]'>
+
+              {/* THIS IS THE IMPORTANT PART.
+        This container provides the dark background and rounded corners.
+      */}
+              <div className="max-w-3xl mx-auto my-12 w-full">
+                <div className="bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+                  {faqs.map((faq, index) => (
+                    <FaqItem key={index} question={faq.question} answer={faq.answer} />
+                  ))}
+                </div>
+              </div>
+
             </div>
           </div>
-        </div>
+        </section>
         <section className="section-10 min-h-[100vh] bg-[#502274]  md:pt-60 pt-30">
           <div className='flex-flex-col justify-center items-center relative '>
             <div className='flex flex-col gap-8 justify-center items-center xl:w-[50%] mx-auto text-center relative z-30'>
