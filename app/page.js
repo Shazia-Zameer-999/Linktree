@@ -534,35 +534,34 @@ import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 
 
+import { FaChevronDown } from 'react-icons/fa'; // We only need one icon
+import { useState } from 'react';
+
 const FaqItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    // Changed border-b to a subtle ring on hover/open for distinction
-    // Added rounded-lg for individual items
-    <div className={`
-            mb-4 rounded-lg shadow-md
-            ${isOpen ? 'bg-gray-800' : 'bg-gray-900'} // Darker background when open
-            transition-colors duration-200 ease-in-out
-        `}>
+    // Re-added the bottom border to separate items
+    <div className="border-b border-white/20">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex justify-between items-center text-left py-4 px-6 focus:outline-none"
+        className="w-full flex justify-between items-center text-left py-5 px-6 focus:outline-none"
       >
         <h3 className="text-lg font-medium text-slate-100">{question}</h3>
+
+        {/* Swapped back to blue and now we rotate the icon */}
         <span className={`
-                    text-purple-400 // Changed to purple-400 for better contrast on dark bg
-                    transition-transform duration-300 ease-in-out
-                    ${isOpen ? 'rotate-180' : 'rotate-0'} // Smooth icon rotation
-                `}>
-          {isOpen ? <FaChevronUp size={20} /> : <FaChevronDown size={20} />}
+            text-blue-400 
+            transition-transform duration-300 ease-in-out
+            ${isOpen ? 'rotate-180' : 'rotate-0'} 
+        `}>
+          <FaChevronDown size={20} />
         </span>
       </button>
-      <div className={`
-                transition-max-height duration-500 ease-in-out overflow-hidden
-                ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}
-            `}>
-        <div className="pb-4 px-6 text-slate-300 text-base"> {/* Adjusted padding and text color */}
+
+      {/* This animation logic is still perfect */}
+      <div className={`transition-max-height duration-500 ease-in-out overflow-hidden ${isOpen ? 'max-h-96' : 'max-h-0'}`}>
+        <div className="pb-5 px-6 text-slate-400">
           {answer}
         </div>
       </div>
@@ -574,28 +573,28 @@ const FaqItem = ({ question, answer }) => {
 const Home = () => {
   const faqs = [
     {
-      question: "What is 'Get me a Chai'?",
-      answer: "Get me a Chai is a crowdfunding platform that allows fans and followers to support their favorite creators through small, one-time donations, similar to buying them a chai as a token of appreciation."
+      question: "What is this service?",
+      answer: "This is a 'link in bio' platform. It lets you create one simple, beautiful page to hold all your important links. You can then share that single link on your social media profiles (like Instagram, TikTok, or Twitter) to direct your followers to your website, store, or other social media accounts."
     },
     {
-      question: "How do I receive payments as a creator?",
-      answer: "You can connect your Razorpay account to your 'Get me a Chai' profile. All donations from your supporters are processed securely through Razorpay and transferred directly to your linked account."
+      question: "How do I get started?",
+      answer: "It's easy! Just claim your unique handle on the homepage. Once you sign up, you'll get access to your personal dashboard where you can start adding your links, customizing your page's look, and more."
     },
     {
-      question: "Is it free to use for creators?",
-      answer: "Yes! Creating a page on 'Get me a Chai' is completely free. We believe in supporting creators without adding financial barriers. Standard payment processor fees from Razorpay may apply to the donations you receive."
+      question: "Is this service free to use?",
+      answer: "Yes, our core service is completely free! You can add unlimited links and customize your profile. We may add premium features in the future, but the essentials will always be free for everyone."
     },
     {
-      question: "Can I support a creator anonymously?",
-      answer: "While you need to provide a name for the supporter leaderboard, you can choose to use a pseudonym or a general name if you wish to remain relatively anonymous. The creator will see the name you provide."
+      question: "Where should I put my new link?",
+      answer: "Anywhere and everywhere! The most common places are your Instagram bio, TikTok profile, and Twitter/X profile. You can also add it to your email signature, your YouTube channel description, or even on a business card."
     },
     {
-      question: "What percentage does 'Get me a Chai' take?",
-      answer: "We take a 0% platform fee. Our goal is to ensure that the maximum amount of support goes directly to the creators. You only have to cover the standard transaction fees charged by our payment partner, Razorpay."
+      question: "Can I customize my page?",
+      answer: "Absolutely. You can upload your own profile picture, add a bio, and customize the links to match your personal brand. This is your personal landing page."
     },
     {
-      question: "How can I contact support?",
-      answer: "If you have any questions or need assistance, please feel free to reach out to us through our contact page or email us at datendiva.mailer@gmail.com."
+      question: "I have a question or need help.",
+      answer: "We're here for you! If you have any questions or need assistance, please feel free to reach out to us through our contact page or email us at datendiva.mailer@gmail.com."
     }
   ];
 
@@ -921,25 +920,26 @@ const Home = () => {
           </div>
         </section>
         <section className="section-9 bg-[#780016] text-[#e9c0e9] min-h-[100vh] py-20 relative w-full">
-          <div className='md:w-[80vw] w-[95vw] mx-auto justify-center items-center flex flex-col gap-10'>
-            <div className="text-white container mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex justify-center flex-col items-center h-[40vh] gap-4 text-center">
-                <h1 className="font-bold text-4xl sm:text-5xl">Frequently Asked Questions</h1>
-                <p className="max-w-2xl text-base sm:text-lg text-slate-300">
-                  Have a question? We're here to help. Find answers to common questions about our platform below.
-                </p>
-              </div>
+          <div className="text-white container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-center flex-col items-center h-[40vh] gap-4 text-center">
+              <h1 className="font-bold text-4xl sm:text-5xl">Frequently Asked Questions</h1>
+              <p className="max-w-2xl text-base sm:text-lg text-slate-300">
+                Have a question? We're here to help. Find answers to common questions about our platform below.
+              </p>
+            </div>
 
-              <div className="max-w-3xl mx-auto my-12">
-                {/* Removed the outer bg-gray-900 as each item now has its own background */}
-                <div className="rounded-lg shadow-lg">
-                  {faqs.map((faq, index) => (
-                    <FaqItem key={index} question={faq.question} answer={faq.answer} />
-                  ))}
-                </div>
+            <div className="max-w-3xl mx-auto my-12">
+              {/* THIS IS THE CONTAINER you see in the screenshot.
+                  It has the dark background and rounded corners.
+                */}
+              <div className="bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+                {faqs.map((faq, index) => (
+                  <FaqItem key={index} question={faq.question} answer={faq.answer} />
+                ))}
               </div>
             </div>
           </div>
+
         </section>
         <section className="section-10 min-h-[100vh] bg-[#502274]  md:pt-60 pt-30">
           <div className='flex-flex-col justify-center items-center relative '>
