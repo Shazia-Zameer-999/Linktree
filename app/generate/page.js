@@ -156,23 +156,23 @@
 import React, { useState, Suspense } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useSearchParams, useRouter } from 'next/navigation'; // Import useRouter
+import { useSearchParams, useRouter } from 'next/navigation';
 
 const GenerateForm = () => {
     const searchParams = useSearchParams();
-    const router = useRouter(); // Initialize the router
+    const router = useRouter(); 
     
     const [handle, sethandle] = useState(searchParams.get('handle') || "")
     const [pic, setpic] = useState("")
     const [bio, setbio] = useState("")
     const [links, setlinks] = useState([{ linktext: "", link: "" }])
 
-    // This is a much cleaner way to handle changes to your links array.
+   
     const handleLinkChange = (index, event) => {
         const { name, value } = event.target;
         const newLinks = links.map((link, i) => {
             if (i === index) {
-                // [name] will be either "linktext" or "link"
+             
                 return { ...link, [name]: value };
             }
             return link;
@@ -187,7 +187,7 @@ const GenerateForm = () => {
 
     const submitLinks = async (handle, links, pic) => {
         
-        // This filtering logic is excellent.
+       
         const filteredLinks = links.filter(link => {
             const linkTextFilled = link.linktext && link.linktext.trim() !== "";
             const linkUrlFilled = link.link && link.link.trim() !== "";
@@ -197,7 +197,7 @@ const GenerateForm = () => {
        
         if (filteredLinks.length === 0) {
             toast.error("Please provide at least one complete link (with both text and a URL).");
-            return; // Stop the function here
+            return; 
         }
 
         const myHeaders = new Headers();
@@ -206,7 +206,7 @@ const GenerateForm = () => {
         const cleanHandle = handle.toLowerCase().trim();
 
         const raw = JSON.stringify({
-            "handle": cleanHandle, // Use the cleaned handle
+            "handle": cleanHandle, 
             "links": filteredLinks, 
             "pic": pic.trim(),
             "bio": bio.trim()
@@ -226,19 +226,23 @@ const GenerateForm = () => {
             const result = await r.json();
 
             if (r.ok && result.success) {
-                // 1. Show success toast
+              
+                
                 toast.success(result.message);
                 
-                // 2. Clear the form
-                setlinks([{ linktext: "", link: "" }]); // Reset to one empty link
+               
+                
+                setlinks([{ linktext: "", link: "" }]);
+                
                 setpic("");
                 sethandle("");
                 setbio("");
 
-                // 3. NEW: Wait 2 seconds, then redirect the user
+               
+                
                 setTimeout(() => {
                     router.push(`/${cleanHandle}`);
-                }, 2000); // 2000ms = 2 seconds
+                }, 2000); 
 
             } else {
                 toast.error(result.message || "An unknown error occurred.");
@@ -249,7 +253,7 @@ const GenerateForm = () => {
         }
     }
     
-    // This variable checks if *any* link is properly filled
+   
     const atLeastOneLinkFilled = links.some(l => l.linktext.trim() !== "" && l.link.trim() !== "");
 
     return (
@@ -266,9 +270,7 @@ const GenerateForm = () => {
                         <h2 className='font-semibold text-2xl max-[400px]:px-3 '>Step 2: Add Links</h2>
                         {links && links.map((item, index) => {
                             return <div key={index} className='flex  min-[490px]:gap-5 gap-2 '>
-                                {/* FIX: Using handleLinkChange and adding 'name' attributes.
-                                  This is a much more standard and less buggy way to handle forms.
-                                */}
+                                
                                 <input 
                                     name="linktext" 
                                     value={item.linktext} 
@@ -300,7 +302,7 @@ const GenerateForm = () => {
 
                         </div>
                         
-                        {/* FIX: Updated disabled logic to be more accurate */}
+                       
                         <button 
                             disabled={!handle || !atLeastOneLinkFilled} 
                             onClick={() => { submitLinks(handle, links, pic) }} 
