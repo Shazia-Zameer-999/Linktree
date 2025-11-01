@@ -533,10 +533,6 @@ import { useRouter } from 'next/navigation';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 
-
-import { FaChevronDown } from 'react-icons/fa';
-import { useState } from 'react';
-
 const FaqItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
