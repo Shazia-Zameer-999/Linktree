@@ -153,67 +153,64 @@
 //   )
 // }
 "use client"
-import React, { useState } from 'react'
+import React, { useState, Suspense } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
-import { useSearchParams } from 'next/navigation';
-
+import 'react-toastify/dist/ReactToastify.css';
+import { useSearchParams, useRouter } from 'next/navigation'; // Import useRouter
 
 const GenerateForm = () => {
     const searchParams = useSearchParams();
+    const router = useRouter(); // Initialize the router
+    
     const [handle, sethandle] = useState(searchParams.get('handle') || "")
     const [pic, setpic] = useState("")
     const [bio, setbio] = useState("")
     const [links, setlinks] = useState([{ linktext: "", link: "" }])
 
-    const handleChange = (index, link, linktext) => {
-        setlinks((initialLinks) => {
-            return initialLinks.map((item, i) => {
-                if (i === index) {
-                    return { linktext, link }
-                }
-                else {
-                    return item
-                }
-            })
-
-        })
-    }
+    // This is a much cleaner way to handle changes to your links array.
+    const handleLinkChange = (index, event) => {
+        const { name, value } = event.target;
+        const newLinks = links.map((link, i) => {
+            if (i === index) {
+                // [name] will be either "linktext" or "link"
+                return { ...link, [name]: value };
+            }
+            return link;
+        });
+        setlinks(newLinks);
+    };
 
     const addLink = () => {
-
         setlinks([...links, { linktext: "", link: "" }])
-        console.log(links)
     }
-
-
-    const cleanHandle = handle.toLowerCase().trim();
 
 
     const submitLinks = async (handle, links, pic) => {
-
-
+        
+        // This filtering logic is excellent.
         const filteredLinks = links.filter(link => {
             const linkTextFilled = link.linktext && link.linktext.trim() !== "";
             const linkUrlFilled = link.link && link.link.trim() !== "";
-            return linkTextFilled && linkUrlFilled;
+            return linkTextFilled && linkUrlFilled; 
         });
 
-
+       
         if (filteredLinks.length === 0) {
             toast.error("Please provide at least one complete link (with both text and a URL).");
-
+            return; // Stop the function here
         }
 
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
+        const cleanHandle = handle.toLowerCase().trim();
+
         const raw = JSON.stringify({
-            "handle": handle.toLowerCase().trim(),
-            "links": filteredLinks,
+            "handle": cleanHandle, // Use the cleaned handle
+            "links": filteredLinks, 
             "pic": pic.trim(),
             "bio": bio.trim()
         });
-
 
         console.log("Submitting this clean data:", raw);
 
@@ -229,14 +226,19 @@ const GenerateForm = () => {
             const result = await r.json();
 
             if (r.ok && result.success) {
+                // 1. Show success toast
                 toast.success(result.message);
-                setlinks([]);
+                
+                // 2. Clear the form
+                setlinks([{ linktext: "", link: "" }]); // Reset to one empty link
                 setpic("");
                 sethandle("");
                 setbio("");
+
+                // 3. NEW: Wait 2 seconds, then redirect the user
                 setTimeout(() => {
                     router.push(`/${cleanHandle}`);
-                }, 2000);
+                }, 2000); // 2000ms = 2 seconds
 
             } else {
                 toast.error(result.message || "An unknown error occurred.");
@@ -246,17 +248,9 @@ const GenerateForm = () => {
             console.error("Submission Error:", error);
         }
     }
-    const handleLinkChange = (index, event) => {
-        const { name, value } = event.target;
-        const newLinks = links.map((link, i) => {
-            if (i === index) {
-                return { ...link, [name]: value };
-            }
-            return link;
-        });
-        setlinks(newLinks);
-    };
-
+    
+    // This variable checks if *any* link is properly filled
+    const atLeastOneLinkFilled = links.some(l => l.linktext.trim() !== "" && l.link.trim() !== "");
 
     return (
         <>
@@ -272,9 +266,26 @@ const GenerateForm = () => {
                         <h2 className='font-semibold text-2xl max-[400px]:px-3 '>Step 2: Add Links</h2>
                         {links && links.map((item, index) => {
                             return <div key={index} className='flex  min-[490px]:gap-5 gap-2 '>
-                                <input value={item.linktext} onChange={e => handleChange(index, item.link, e.target.value)} className='bg-white py-3 min-[490px]:px-4 max-[400px]:w-40 pl-1 rounded-lg focus:outline-amber-500' type="text" placeholder='Enter link text' />
+                                {/* FIX: Using handleLinkChange and adding 'name' attributes.
+                                  This is a much more standard and less buggy way to handle forms.
+                                */}
+                                <input 
+                                    name="linktext" 
+                                    value={item.linktext} 
+                                    onChange={e => handleLinkChange(index, e)} 
+                                    className='bg-white py-3 min-[490px]:px-4 max-[400px]:w-40 pl-1 rounded-lg focus:outline-amber-500' 
+                                    type="text" 
+                                    placeholder='Enter link text' 
+                                />
 
-                                <input value={item.link} onChange={e => handleChange(index, e.target.value, item.linktext)} className='bg-white py-3 min-[490px]:px-4 max-[400px]:w-40 pl-1 rounded-lg focus:outline-amber-500' type="text" placeholder='Enter link' />
+                                <input 
+                                    name="link"
+                                    value={item.link} 
+                                    onChange={e => handleLinkChange(index, e)} 
+                                    className='bg-white py-3 min-[490px]:px-4 max-[400px]:w-40 pl-1 rounded-lg focus:outline-amber-500' 
+                                    type="text" 
+                                    placeholder='Enter link' 
+                                />
                             </div>
                         })}
 
@@ -288,7 +299,15 @@ const GenerateForm = () => {
                             <input value={pic} onChange={e => { setpic(e.target.value) }} className='bg-white py-3 pr-40  min-[490px]:pr-65 pl-2 rounded-lg focus:outline-amber-500' type="text" placeholder='Enter link to your Picture' />
 
                         </div>
-                        <button disabled={pic === "" || handle === "" || links.every(l => l.linktext === "" || l.link === "")} onClick={() => { submitLinks(handle, links, pic) }} className='px-2 font-bold text-white   bg-[#201f1f] rounded-xl p-2 cursor-pointer disabled:bg-slate-500'>Create your Linktree</button>
+                        
+                        {/* FIX: Updated disabled logic to be more accurate */}
+                        <button 
+                            disabled={!handle || !atLeastOneLinkFilled} 
+                            onClick={() => { submitLinks(handle, links, pic) }} 
+                            className='px-2 font-bold text-white bg-[#201f1f] rounded-xl p-2 cursor-pointer disabled:bg-slate-500'
+                        >
+                            Create your Linktree
+                        </button>
 
                     </div>
 
@@ -304,12 +323,10 @@ const GenerateForm = () => {
 }
 
 
-import { Suspense } from 'react';
-
 export default function GeneratePage() {
-    return (
-        <Suspense fallback={<div>Loading page...</div>}>
-            <GenerateForm />
-        </Suspense>
-    )
+  return (
+    <Suspense fallback={<div>Loading page...</div>}>
+      <GenerateForm />
+    </Suspense>
+  )
 }
