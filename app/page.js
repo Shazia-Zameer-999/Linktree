@@ -537,16 +537,15 @@ const FaqItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    // This is a single item. The background is transparent
-    // because its parent (bg-gray-900) provides the color.
-    <div className="border-b border-white/20"> {/* Divider line */}
+  
+    <div className="border-b border-white/20"> 
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex justify-between items-center text-left py-5 px-6 focus:outline-none"
       >
         <h3 className="text-lg font-medium text-slate-100">{question}</h3>
 
-        {/* We use the icon color and rotation from the screenshot */}
+    
         <span className={`
                     text-blue-400 
                     transition-transform duration-300 ease-in-out
@@ -556,7 +555,7 @@ const FaqItem = ({ question, answer }) => {
         </span>
       </button>
 
-      {/* This animation is correct */}
+  
       <div className={`transition-max-height duration-500 ease-in-out overflow-hidden ${isOpen ? 'max-h-96' : 'max-h-0'}`}>
         <div className="pb-5 px-6 text-slate-400">
           {answer}

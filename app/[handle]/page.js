@@ -13,7 +13,7 @@ export default function Page() {
     const [item, setItem] = useState(null);
     const [loading, setLoading] = useState(true);
 
- 
+
 
     useEffect(() => {
         if (handle) {
@@ -22,17 +22,17 @@ export default function Page() {
                     setLoading(true);
                     const response = await fetch(`/api/user/${handle}`);
 
-                   
+
                     if (!response.ok) {
                         const errorData = await response.json();
-                       
+
                         throw new Error(errorData.message || `Error: ${response.status}`);
                     }
 
                     const data = await response.json();
                     setItem(data);
                 } catch (error) {
-                   
+
                     console.error("Error fetching data:", error.message);
                     setItem(null);
                 } finally {
@@ -44,7 +44,7 @@ export default function Page() {
         }
     }, [handle]);
 
-   
+
 
     const ICONS = {
         'nextjs': (
@@ -58,7 +58,7 @@ export default function Page() {
         ),
     };
 
-    
+
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
@@ -67,7 +67,7 @@ export default function Page() {
         )
     }
 
-   
+
     if (!item) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
@@ -107,7 +107,7 @@ export default function Page() {
                         <h1 className="text-3xl font-bold mt-6 mb-2">
                             @{item.handle}
                         </h1>
-                        <p className="text-white/80 mb-8">Sharing my journey in web development.</p>
+                        <p className="text-white/80 mb-8">{item.bio}</p>
 
                         <div className="flex flex-col gap-y-5 w-full">
                             {item.links.map((linkItem, index) => (

@@ -8,6 +8,7 @@ const GenerateForm = () => {
     const searchParams = useSearchParams();
     const [handle, sethandle] = useState(searchParams.get('handle') || "")
     const [pic, setpic] = useState("")
+    const [bio, setbio] = useState("")
     const [links, setlinks] = useState([{ linktext: "", link: "" }])
 
     const handleChange = (index, link, linktext) => {
@@ -52,7 +53,8 @@ const GenerateForm = () => {
         const raw = JSON.stringify({
             "handle": handle.toLowerCase().trim(),
             "links": filteredLinks, 
-            "pic": pic.trim()
+            "pic": pic.trim(),
+            "bio": bio.trim()
         });
 
         console.log("Submitting this clean data:", raw);
@@ -73,6 +75,7 @@ const GenerateForm = () => {
                 setlinks([]);
                 setpic("");
                 sethandle("");
+                setbio("");
             } else {
                 toast.error(result.message || "An unknown error occurred.");
             }
@@ -117,9 +120,11 @@ const GenerateForm = () => {
 
 
 
-                        <h2 className='font-semibold text-2xl'>Step 3: Add picture and finalize</h2>
+                        <h2 className='font-semibold text-2xl'>Step 3: Add heading and your picture</h2>
                         <div className='flex flex-col gap-4' >
+                            <input value={bio} onChange={e => { setbio(e.target.value) }} className='bg-white py-3 pr-40  min-[490px]:pr-65 pl-2 rounded-lg focus:outline-amber-500' type="text" placeholder='Enter your bio' />
                             <input value={pic} onChange={e => { setpic(e.target.value) }} className='bg-white py-3 pr-40  min-[490px]:pr-65 pl-2 rounded-lg focus:outline-amber-500' type="text" placeholder='Enter link to your Picture' />
+
                         </div>
                         <button disabled={pic === "" || handle === "" || links.every(l => l.linktext === "" || l.link === "")} onClick={() => { submitLinks(handle, links, pic) }} className='px-2 font-bold text-white   bg-[#201f1f] rounded-xl p-2 cursor-pointer disabled:bg-slate-500'>Create your Linktree</button>
 
