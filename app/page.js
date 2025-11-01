@@ -534,34 +534,42 @@ import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 
 
-import { FaChevronDown } from 'react-icons/fa'; // We only need one icon
+import { FaChevronDown } from 'react-icons/fa';
 import { useState } from 'react';
 
 const FaqItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    // Re-added the bottom border to separate items
-    <div className="border-b border-white/20">
+    // Each FAQ is now its own card
+    <div className={`
+            mb-4 // Space between cards
+            rounded-xl // More rounded corners
+            shadow-lg // More prominent shadow for depth
+            bg-[#780016] // The specific dark red background for each card
+            text-white // Ensure text is white for contrast
+
+            // Transition for the background color change on open
+            transition-colors duration-200 ease-in-out
+        `}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex justify-between items-center text-left py-5 px-6 focus:outline-none"
       >
-        <h3 className="text-lg font-medium text-slate-100">{question}</h3>
-
-        {/* Swapped back to blue and now we rotate the icon */}
+        <h3 className="text-lg font-medium text-white">{question}</h3> {/* Question text is white */}
         <span className={`
-            text-blue-400 
-            transition-transform duration-300 ease-in-out
-            ${isOpen ? 'rotate-180' : 'rotate-0'} 
-        `}>
+                    text-white // Icon color is white
+                    transition-transform duration-300 ease-in-out
+                    ${isOpen ? 'rotate-180' : 'rotate-0'} // Smooth icon rotation
+                `}>
           <FaChevronDown size={20} />
         </span>
       </button>
-
-      {/* This animation logic is still perfect */}
-      <div className={`transition-max-height duration-500 ease-in-out overflow-hidden ${isOpen ? 'max-h-96' : 'max-h-0'}`}>
-        <div className="pb-5 px-6 text-slate-400">
+      <div className={`
+                transition-max-height duration-500 ease-in-out overflow-hidden
+                ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'} // Fades in and out
+            `}>
+        <div className="pb-5 px-6 text-white text-base"> {/* Answer text is white */}
           {answer}
         </div>
       </div>
@@ -919,28 +927,26 @@ const Home = () => {
             </div>
           </div>
         </section>
-        <section className="section-9 bg-[#780016] text-[#e9c0e9] min-h-[100vh] py-20 relative w-full">
-          <div className="text-white container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-center flex-col items-center h-[40vh] gap-4 text-center">
-              <h1 className="font-bold text-4xl sm:text-5xl">Frequently Asked Questions</h1>
-              <p className="max-w-2xl text-base sm:text-lg text-slate-300">
-                Have a question? We're here to help. Find answers to common questions about our platform below.
-              </p>
-            </div>
-
-            <div className="max-w-3xl mx-auto my-12">
-              {/* THIS IS THE CONTAINER you see in the screenshot.
-                  It has the dark background and rounded corners.
-                */}
-              <div className="bg-gray-900 rounded-lg shadow-lg overflow-hidden">
-                {faqs.map((faq, index) => (
-                  <FaqItem key={index} question={faq.question} answer={faq.answer} />
-                ))}
-              </div>
-            </div>
+        <div className="text-white container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center flex-col items-center h-[40vh] gap-4 text-center">
+            <h1 className="font-bold text-4xl sm:text-5xl">Frequently Asked Questions</h1>
+            <p className="max-w-2xl text-base sm:text-lg text-slate-300">
+              Have a question? We're here to help. Find answers to common questions about our platform below.
+            </p>
           </div>
 
-        </section>
+          <div className="max-w-3xl mx-auto my-12">
+            {/* IMPORTANT: Remove the outer bg-gray-900 and shadow from here.
+                    Each FaqItem will now be its own card.
+                    The background of this section should be the lighter red from the screenshot.
+                */}
+            <div className=""> {/* Removed bg-gray-900 rounded-lg shadow-lg */}
+              {faqs.map((faq, index) => (
+                <FaqItem key={index} question={faq.question} answer={faq.answer} />
+              ))}
+            </div>
+          </div>
+        </div>
         <section className="section-10 min-h-[100vh] bg-[#502274]  md:pt-60 pt-30">
           <div className='flex-flex-col justify-center items-center relative '>
             <div className='flex flex-col gap-8 justify-center items-center xl:w-[50%] mx-auto text-center relative z-30'>
