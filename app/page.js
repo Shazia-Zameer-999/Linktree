@@ -538,18 +538,31 @@ const FaqItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border-b border-white/10">
+    // Changed border-b to a subtle ring on hover/open for distinction
+    // Added rounded-lg for individual items
+    <div className={`
+            mb-4 rounded-lg shadow-md
+            ${isOpen ? 'bg-gray-800' : 'bg-gray-900'} // Darker background when open
+            transition-colors duration-200 ease-in-out
+        `}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex justify-between items-center text-left py-5 px-6 focus:outline-none"
+        className="w-full flex justify-between items-center text-left py-4 px-6 focus:outline-none"
       >
         <h3 className="text-lg font-medium text-slate-100">{question}</h3>
-        <span className="text-blue-400">
+        <span className={`
+                    text-purple-400 // Changed to purple-400 for better contrast on dark bg
+                    transition-transform duration-300 ease-in-out
+                    ${isOpen ? 'rotate-180' : 'rotate-0'} // Smooth icon rotation
+                `}>
           {isOpen ? <FaChevronUp size={20} /> : <FaChevronDown size={20} />}
         </span>
       </button>
-      <div className={`transition-max-height duration-500 ease-in-out overflow-hidden ${isOpen ? 'max-h-96' : 'max-h-0'}`}>
-        <div className="pb-5 px-6 text-slate-400">
+      <div className={`
+                transition-max-height duration-500 ease-in-out overflow-hidden
+                ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}
+            `}>
+        <div className="pb-4 px-6 text-slate-300 text-base"> {/* Adjusted padding and text color */}
           {answer}
         </div>
       </div>
@@ -909,18 +922,22 @@ const Home = () => {
         </section>
         <section className="section-9 bg-[#780016] text-[#e9c0e9] min-h-[100vh] py-20 relative w-full">
           <div className='md:w-[80vw] w-[95vw] mx-auto justify-center items-center flex flex-col gap-10'>
-            <h2 className='md:text-6xl text-4xl font-extrabold text-center'>Questions? Answered</h2>
-            <div className='flex flex-col md:gap-5 gap-3 justify-center items-center w-[100%]'>
+            <div className="text-white container mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="flex justify-center flex-col items-center h-[40vh] gap-4 text-center">
+                <h1 className="font-bold text-4xl sm:text-5xl">Frequently Asked Questions</h1>
+                <p className="max-w-2xl text-base sm:text-lg text-slate-300">
+                  Have a question? We're here to help. Find answers to common questions about our platform below.
+                </p>
+              </div>
+
               <div className="max-w-3xl mx-auto my-12">
-                <div className="bg-gray-900 rounded-lg shadow-lg">
+                {/* Removed the outer bg-gray-900 as each item now has its own background */}
+                <div className="rounded-lg shadow-lg">
                   {faqs.map((faq, index) => (
                     <FaqItem key={index} question={faq.question} answer={faq.answer} />
                   ))}
                 </div>
               </div>
-
-
-
             </div>
           </div>
         </section>
