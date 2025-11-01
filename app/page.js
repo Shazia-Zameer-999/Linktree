@@ -541,35 +541,33 @@ const FaqItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    // Each FAQ is now its own card
+  
     <div className={`
-            mb-4 // Space between cards
-            rounded-xl // More rounded corners
-            shadow-lg // More prominent shadow for depth
-            bg-[#780016] // The specific dark red background for each card
-            text-white // Ensure text is white for contrast
-
-            // Transition for the background color change on open
+            mb-4 
+            rounded-xl 
+            shadow-lg 
+            bg-[#780016] 
+            text-white
             transition-colors duration-200 ease-in-out
         `}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex justify-between items-center text-left py-5 px-6 focus:outline-none"
       >
-        <h3 className="text-lg font-medium text-white">{question}</h3> {/* Question text is white */}
+        <h3 className="text-lg font-medium text-white">{question}</h3> 
         <span className={`
-                    text-white // Icon color is white
+                    text-white 
                     transition-transform duration-300 ease-in-out
-                    ${isOpen ? 'rotate-180' : 'rotate-0'} // Smooth icon rotation
+                    ${isOpen ? 'rotate-180' : 'rotate-0'}
                 `}>
           <FaChevronDown size={20} />
         </span>
       </button>
       <div className={`
                 transition-max-height duration-500 ease-in-out overflow-hidden
-                ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'} // Fades in and out
+                ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'} 
             `}>
-        <div className="pb-5 px-6 text-white text-base"> {/* Answer text is white */}
+        <div className="pb-5 px-6 text-white text-base"> 
           {answer}
         </div>
       </div>
@@ -936,11 +934,8 @@ const Home = () => {
           </div>
 
           <div className="max-w-3xl mx-auto my-12">
-            {/* IMPORTANT: Remove the outer bg-gray-900 and shadow from here.
-                    Each FaqItem will now be its own card.
-                    The background of this section should be the lighter red from the screenshot.
-                */}
-            <div className=""> {/* Removed bg-gray-900 rounded-lg shadow-lg */}
+            
+            <div className=""> 
               {faqs.map((faq, index) => (
                 <FaqItem key={index} question={faq.question} answer={faq.answer} />
               ))}
