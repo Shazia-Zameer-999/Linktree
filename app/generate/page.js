@@ -599,7 +599,7 @@ const GenerateForm = () => {
                     <div className='flex flex-col gap-5 '>
                         <h2 className='font-semibold text-2xl max-[400px]:px-3'>Step 1: Claim your Handle</h2>
                         <div>
-                            <input value={handle} onChange={e => { sethandle(e.target.value) }} className='bg-white py-3 pr-35  min-[490px]:pr-65 pl-2 rounded-lg focus:outline-amber-500' type="text" placeholder='Choose a handle' />
+                            <input value={handle} onChange={e => { sethandle(e.target.value) }} className='bg-white py-3 w-40 pl-2 rounded-lg focus:outline-amber-500' type="text" placeholder='Choose a handle' />
                         </div>
                         <h2 className='font-semibold text-2xl max-[400px]:px-3 '>Step 2: Add Links</h2>
                         {links && links.map((item, index) => {
