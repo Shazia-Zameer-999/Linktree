@@ -609,7 +609,7 @@ const GenerateForm = () => {
                                     name="linktext" 
                                     value={item.linktext} 
                                     onChange={e => handleLinkChange(index, e)} 
-                                    className='bg-white py-3 min-[490px]:px-4 max-[400px]:w-44 pl-2 rounded-lg focus:outline-amber-500' 
+                                    className='bg-white py-3 min-[490px]:px-4 max-[400px]:w-46 w-60 pl-2 rounded-lg focus:outline-amber-500' 
                                     type="text" 
                                     placeholder='Enter link text' 
                                 />
@@ -618,7 +618,7 @@ const GenerateForm = () => {
                                     name="link"
                                     value={item.link} 
                                     onChange={e => handleLinkChange(index, e)} 
-                                    className='bg-white py-3 min-[490px]:px-4 max-[400px]:w-44 pl-2 rounded-lg focus:outline-amber-500' 
+                                    className='bg-white py-3 min-[490px]:px-4 max-[400px]:w-46 w-60 pl-2 rounded-lg focus:outline-amber-500' 
                                     type="text" 
                                     placeholder='Enter link' 
                                 />
