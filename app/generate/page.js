@@ -625,7 +625,7 @@ const GenerateForm = () => {
                             </div>
                         })}
 
-                        <button onClick={() => addLink()} className='max-[400px]:px-3 font-bold text-white   bg-[#201f1f] rounded-xl py-2 cursor-pointer max-[490px]:w-83'>+ Add Link</button>
+                        <button onClick={() => addLink()} className='max-[400px]:px-3 font-bold text-white   bg-[#201f1f] rounded-xl py-2 cursor-pointer max-[490px]:w-87'>+ Add Link</button>
 
 
 
