@@ -631,8 +631,8 @@ const GenerateForm = () => {
 
                         <h2 className='font-semibold text-2xl'>Step 3: Add heading and your picture</h2>
                         <div className='flex flex-col gap-4' >
-                            <input value={bio} onChange={e => { setbio(e.target.value) }} className='bg-white py-3   min-[490px]:pr-65 pl-2 rounded-lg focus:outline-amber-500' type="text" placeholder='Enter your bio' />
-                            <input value={pic} onChange={e => { setpic(e.target.value) }} className='bg-white py-3   min-[490px]:pr-65 pl-2 rounded-lg focus:outline-amber-500' type="text" placeholder='Enter link to your Picture' />
+                            <input value={bio} onChange={e => { setbio(e.target.value) }} className='bg-white py-3   pl-2 rounded-lg focus:outline-amber-500' type="text" placeholder='Enter your bio' />
+                            <input value={pic} onChange={e => { setpic(e.target.value) }} className='bg-white py-3  pl-2 rounded-lg focus:outline-amber-500' type="text" placeholder='Enter link to your Picture' />
 
                         </div>
                         
