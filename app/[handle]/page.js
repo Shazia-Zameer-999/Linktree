@@ -125,7 +125,7 @@ export default function Page() {
                                 </a>
                             ))}
                         </div>
-                        <div className='text-center flex justify-center items-center font-bold text-white'>Made with 💕 by Daten Diva</div>
+                        <div className='text-center flex justify-center items-center font-bold text-white pt-5'>Made with 💕 by Daten Diva</div>
                     </div>
                 </div>
 
