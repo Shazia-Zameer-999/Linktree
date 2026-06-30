@@ -12,6 +12,7 @@ export default function Page() {
 
     const [item, setItem] = useState(null);
     const [loading, setLoading] = useState(true);
+    const initials = item?.handle?.split(/[\s_-]+/).map(word => word[0]).join("").toUpperCase();
 
 
 
@@ -97,7 +98,11 @@ export default function Page() {
                         <div className="relative">
                             <img
                                 className="w-32 h-32 rounded-full mx-auto border-4 border-white/50 shadow-2xl transition-transform duration-300 hover:scale-105"
-                                src={item.pic}
+                                src={
+                                    item.pic?.trim()
+                                        ? item.pic
+                                        : `https://placehold.co/128x128/7e22ce/ffffff?text=${encodeURIComponent(initials || "U")}`
+                                }
                                 alt="Profile Picture"
                                 onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/128x128/7e22ce/ffffff?text=User'; }}
                             />
@@ -125,7 +130,7 @@ export default function Page() {
                                 </a>
                             ))}
                         </div>
-                        <div className='text-center flex justify-center items-center font-bold text-white pt-5'>Made with 💕 by Daten Diva</div>
+                        <div className='text-center flex justify-center items-center font-bold text-white pt-5'>Made with 💕 by Shazia Zameer</div>
                     </div>
                 </div>
 

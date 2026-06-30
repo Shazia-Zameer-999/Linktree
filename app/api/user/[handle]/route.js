@@ -1,23 +1,19 @@
 import { NextResponse } from 'next/server';
-import clientPromise from '@/lib/mongodb';
+import { getProfilesCollection } from '@/lib/profiles';
+import { normalizeHandle } from '@/lib/profile-validation';
 
 export async function GET(request, { params }) {
     try {
-        
-        const originalHandle = params.handle;
+        const { handle: originalHandle } = await params;
 
         if (!originalHandle) {
             return NextResponse.json({ message: 'Handle is required' }, { status: 400 });
         }
 
         
-        const handle = originalHandle.toLowerCase();
-
-        const client = await clientPromise;
-        const db = client.db("bittree");
-
-       
-        const userData = await db.collection("links").findOne({ handle: handle });
+        const handle = normalizeHandle(originalHandle);
+        const collection = await getProfilesCollection();
+        const userData = await collection.findOne({ handle }, { projection: { _id: 0 } });
 
         if (!userData) {
            
