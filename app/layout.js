@@ -5,7 +5,7 @@ import Navbar from "@/components/Navbar";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
   || (process.env.VERCEL_PROJECT_PRODUCTION_URL
     ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : "https://shop.datendiva.me");
+    : "http://localhost:3000");
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
